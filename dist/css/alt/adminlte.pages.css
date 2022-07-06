@@ -12,16 +12,14 @@
   line-height: 1;
   color: #000;
   text-shadow: 0 1px 0 #fff;
-  opacity: .5;
+  opacity: 0.5;
 }
-
 .close:hover, .mailbox-attachment-close:hover {
   color: #000;
   text-decoration: none;
 }
-
 .close:not(:disabled):not(.disabled):hover, .mailbox-attachment-close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus, .mailbox-attachment-close:not(:disabled):not(.disabled):focus {
-  opacity: .75;
+  opacity: 0.75;
 }
 
 button.close, button.mailbox-attachment-close {
@@ -34,7 +32,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   pointer-events: none;
 }
 
-@-webkit-keyframes flipInX {
+@-webkit-keyframes flip-in-x {
   0% {
     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
     transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
@@ -61,7 +59,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   }
 }
 
-@keyframes flipInX {
+@keyframes flip-in-x {
   0% {
     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
     transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
@@ -87,8 +85,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     transform: perspective(400px);
   }
 }
-
-@-webkit-keyframes fadeIn {
+@-webkit-keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -96,8 +93,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     opacity: 1;
   }
 }
-
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -105,8 +101,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     opacity: 1;
   }
 }
-
-@-webkit-keyframes fadeOut {
+@-webkit-keyframes fade-out {
   from {
     opacity: 1;
   }
@@ -114,8 +109,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     opacity: 0;
   }
 }
-
-@keyframes fadeOut {
+@keyframes fade-out {
   from {
     opacity: 1;
   }
@@ -123,7 +117,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     opacity: 0;
   }
 }
-
 @-webkit-keyframes shake {
   0% {
     -webkit-transform: translate(2px, 1px) rotate(0deg);
@@ -170,7 +163,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     transform: translate(1px, -2px) rotate(-1deg);
   }
 }
-
 @keyframes shake {
   0% {
     -webkit-transform: translate(2px, 1px) rotate(0deg);
@@ -217,7 +209,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     transform: translate(1px, -2px) rotate(-1deg);
   }
 }
-
 @-webkit-keyframes wobble {
   0% {
     -webkit-transform: none;
@@ -248,7 +239,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     transform: none;
   }
 }
-
 @keyframes wobble {
   0% {
     -webkit-transform: none;
@@ -279,7 +269,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     transform: none;
   }
 }
-
 .mailbox-messages > .table {
   margin: 0;
 }
@@ -287,7 +276,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .mailbox-controls {
   padding: 5px;
 }
-
 .mailbox-controls.with-border {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
@@ -296,12 +284,10 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   padding: 10px;
 }
-
 .mailbox-read-info h3 {
   font-size: 20px;
   margin: 0;
 }
-
 .mailbox-read-info h5 {
   margin: 0;
   padding: 5px 0 0;
@@ -320,7 +306,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   padding-left: 0;
   list-style: none;
 }
-
 .mailbox-attachments li {
   border: 1px solid #eee;
   float: left;
@@ -349,10 +334,9 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   color: #999;
   font-size: 12px;
 }
-
 .mailbox-attachment-size > span {
   display: inline-block;
-  padding-top: .75rem;
+  padding-top: 0.75rem;
 }
 
 .mailbox-attachment-icon {
@@ -362,11 +346,9 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   padding: 20px 10px;
   text-align: center;
 }
-
 .mailbox-attachment-icon.has-img {
   padding: 0;
 }
-
 .mailbox-attachment-icon.has-img > img {
   height: auto;
   max-width: 100%;
@@ -375,7 +357,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .lockscreen {
   background-color: #e9ecef;
 }
-
 .lockscreen .lockscreen-name {
   font-weight: 600;
   text-align: center;
@@ -387,7 +368,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   margin-bottom: 25px;
   text-align: center;
 }
-
 .lockscreen-logo a {
   color: #495057;
 }
@@ -416,7 +396,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   top: -25px;
   z-index: 10;
 }
-
 .lockscreen-image > img {
   border-radius: 50%;
   height: 70px;
@@ -426,11 +405,9 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .lockscreen-credentials {
   margin-left: 70px;
 }
-
 .lockscreen-credentials .form-control {
   border: 0;
 }
-
 .lockscreen-credentials .btn {
   background-color: #fff;
   border: 0;
@@ -444,15 +421,12 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .dark-mode .lockscreen-item {
   background-color: #343a40;
 }
-
 .dark-mode .lockscreen-logo a {
   color: #fff;
 }
-
 .dark-mode .lockscreen-credentials .btn {
   background-color: #343a40;
 }
-
 .dark-mode .lockscreen-image {
   background-color: #6c757d;
 }
@@ -461,10 +435,9 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .register-logo {
   font-size: 2.1rem;
   font-weight: 300;
-  margin-bottom: .9rem;
+  margin-bottom: 0.9rem;
   text-align: center;
 }
-
 .login-logo a,
 .register-logo a {
   color: #495057;
@@ -488,15 +461,13 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .register-box {
   width: 360px;
 }
-
 @media (max-width: 576px) {
   .login-box,
-  .register-box {
-    margin-top: .5rem;
+.register-box {
+    margin-top: 0.5rem;
     width: 90%;
   }
 }
-
 .login-box .card,
 .register-box .card {
   margin-bottom: 0;
@@ -509,46 +480,38 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   color: #666;
   padding: 20px;
 }
-
 .login-card-body .input-group .form-control,
 .register-card-body .input-group .form-control {
   border-right: 0;
 }
-
 .login-card-body .input-group .form-control:focus,
 .register-card-body .input-group .form-control:focus {
   box-shadow: none;
 }
-
 .login-card-body .input-group .form-control:focus ~ .input-group-prepend .input-group-text,
 .login-card-body .input-group .form-control:focus ~ .input-group-append .input-group-text,
 .register-card-body .input-group .form-control:focus ~ .input-group-prepend .input-group-text,
 .register-card-body .input-group .form-control:focus ~ .input-group-append .input-group-text {
   border-color: #80bdff;
 }
-
 .login-card-body .input-group .form-control.is-valid:focus,
 .register-card-body .input-group .form-control.is-valid:focus {
   box-shadow: none;
 }
-
 .login-card-body .input-group .form-control.is-valid ~ .input-group-prepend .input-group-text,
 .login-card-body .input-group .form-control.is-valid ~ .input-group-append .input-group-text,
 .register-card-body .input-group .form-control.is-valid ~ .input-group-prepend .input-group-text,
 .register-card-body .input-group .form-control.is-valid ~ .input-group-append .input-group-text {
   border-color: #28a745;
 }
-
 .login-card-body .input-group .form-control.is-invalid:focus,
 .register-card-body .input-group .form-control.is-invalid:focus {
   box-shadow: none;
 }
-
 .login-card-body .input-group .form-control.is-invalid ~ .input-group-append .input-group-text,
 .register-card-body .input-group .form-control.is-invalid ~ .input-group-append .input-group-text {
   border-color: #dc3545;
 }
-
 .login-card-body .input-group .input-group-text,
 .register-card-body .input-group .input-group-text {
   background-color: transparent;
@@ -576,7 +539,6 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   border-color: #6c757d;
   color: #fff;
 }
-
 .dark-mode .login-logo a,
 .dark-mode .register-logo a {
   color: #fff;
@@ -586,42 +548,35 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   margin: 20px auto 0;
   width: 600px;
 }
-
 @media (max-width: 767.98px) {
   .error-page {
     width: 100%;
   }
 }
-
 .error-page > .headline {
   float: left;
   font-size: 100px;
   font-weight: 300;
 }
-
 @media (max-width: 767.98px) {
   .error-page > .headline {
     float: none;
     text-align: center;
   }
 }
-
 .error-page > .error-content {
   display: block;
   margin-left: 190px;
 }
-
 @media (max-width: 767.98px) {
   .error-page > .error-content {
     margin-left: 0;
   }
 }
-
 .error-page > .error-content > h3 {
   font-size: 25px;
   font-weight: 300;
 }
-
 @media (max-width: 767.98px) {
   .error-page > .error-content > h3 {
     text-align: center;
@@ -660,18 +615,15 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   margin-bottom: 15px;
   padding-bottom: 15px;
 }
-
 .post:last-of-type {
   border-bottom: 0;
   margin-bottom: 0;
   padding-bottom: 0;
 }
-
 .post .user-block {
   margin-bottom: 15px;
   width: 100%;
 }
-
 .post .row {
   width: 100%;
 }
@@ -706,37 +658,32 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   max-width: 7rem;
   padding: 0.5rem;
 }
-
 .product-image-thumb img {
   max-width: 100%;
   height: auto;
   -ms-flex-item-align: center;
   align-self: center;
 }
-
 .product-image-thumb:hover {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .product-share a {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .projects td {
   vertical-align: middle;
 }
-
 .projects .list-inline {
   margin-bottom: 0;
 }
-
 .projects img.table-avatar,
 .projects .table-avatar img {
   border-radius: 50%;
   display: inline;
   width: 2.5rem;
 }
-
 .projects .project-state {
   text-align: center;
 }
@@ -744,13 +691,11 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 body.iframe-mode .main-sidebar {
   display: none;
 }
-
 body.iframe-mode .content-wrapper {
   margin-left: 0 !important;
   margin-top: 0 !important;
   padding-bottom: 0 !important;
 }
-
 body.iframe-mode .main-header,
 body.iframe-mode .main-footer {
   display: none;
@@ -759,7 +704,6 @@ body.iframe-mode .main-footer {
 body.iframe-mode-fullscreen {
   overflow: hidden;
 }
-
 body.iframe-mode-fullscreen.layout-navbar-fixed .wrapper .content-wrapper {
   margin-top: 0 !important;
 }
@@ -767,70 +711,59 @@ body.iframe-mode-fullscreen.layout-navbar-fixed .wrapper .content-wrapper {
 .content-wrapper {
   height: 100%;
 }
-
 .content-wrapper.iframe-mode .btn-iframe-close {
   color: #dc3545;
   position: absolute;
   line-height: 1;
-  right: .125rem;
-  top: .125rem;
+  right: 0.125rem;
+  top: 0.125rem;
   z-index: 10;
   visibility: hidden;
 }
-
 .content-wrapper.iframe-mode .btn-iframe-close:hover, .content-wrapper.iframe-mode .btn-iframe-close:focus {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
+  -webkit-animation-name: fade-in;
+  animation-name: fade-in;
   -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   visibility: visible;
 }
-
 @media (hover: none) and (pointer: coarse) {
   .content-wrapper.iframe-mode .btn-iframe-close {
     visibility: visible;
   }
 }
-
 .content-wrapper.iframe-mode .navbar-nav {
   overflow-y: auto;
   width: 100%;
 }
-
 .content-wrapper.iframe-mode .navbar-nav .nav-link {
   white-space: nowrap;
 }
-
 .content-wrapper.iframe-mode .navbar-nav .nav-item {
   position: relative;
 }
-
 .content-wrapper.iframe-mode .navbar-nav .nav-item:hover .btn-iframe-close, .content-wrapper.iframe-mode .navbar-nav .nav-item:focus .btn-iframe-close {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
+  -webkit-animation-name: fade-in;
+  animation-name: fade-in;
   -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   visibility: visible;
 }
-
 @media (hover: none) and (pointer: coarse) {
   .content-wrapper.iframe-mode .navbar-nav .nav-item:hover .btn-iframe-close, .content-wrapper.iframe-mode .navbar-nav .nav-item:focus .btn-iframe-close {
     visibility: visible;
   }
 }
-
 .content-wrapper.iframe-mode .tab-content {
   position: relative;
 }
-
 .content-wrapper.iframe-mode .tab-pane + .tab-empty {
   display: none;
 }
-
 .content-wrapper.iframe-mode .tab-empty {
   width: 100%;
   display: -ms-flexbox;
@@ -840,7 +773,6 @@ body.iframe-mode-fullscreen.layout-navbar-fixed .wrapper .content-wrapper {
   -ms-flex-align: center;
   align-items: center;
 }
-
 .content-wrapper.iframe-mode .tab-loading {
   position: absolute;
   top: 0;
@@ -849,7 +781,6 @@ body.iframe-mode-fullscreen.layout-navbar-fixed .wrapper .content-wrapper {
   display: none;
   background-color: #f4f6f9;
 }
-
 .content-wrapper.iframe-mode .tab-loading > div {
   display: -ms-flexbox;
   display: flex;
@@ -860,18 +791,15 @@ body.iframe-mode-fullscreen.layout-navbar-fixed .wrapper .content-wrapper {
   width: 100%;
   height: 100%;
 }
-
 .content-wrapper.iframe-mode iframe {
   border: 0;
   width: 100%;
   height: 100%;
   margin-bottom: -8px;
 }
-
 .content-wrapper.iframe-mode iframe .content-wrapper {
   padding-bottom: 0 !important;
 }
-
 body.iframe-mode-fullscreen .content-wrapper.iframe-mode {
   position: absolute;
   left: 0;
@@ -898,13 +826,11 @@ body.iframe-mode-fullscreen .content-wrapper.iframe-mode {
 .content-wrapper.kanban {
   height: 1px;
 }
-
 .content-wrapper.kanban .content {
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
 }
-
 .content-wrapper.kanban .content .container,
 .content-wrapper.kanban .content .container-fluid {
   width: -webkit-max-content;
@@ -915,46 +841,38 @@ body.iframe-mode-fullscreen .content-wrapper.iframe-mode {
   -ms-flex-align: stretch;
   align-items: stretch;
 }
-
 .content-wrapper.kanban .content-header + .content {
-  height: calc(100% - ((2 * 15px) + (1.8rem * 1.2)));
+  height: calc(100% - (30px + (1.8rem * 1.2)));
 }
-
 .content-wrapper.kanban .card .card-body {
-  padding: .5rem;
+  padding: 0.5rem;
 }
-
 .content-wrapper.kanban .card.card-row {
   width: 340px;
   display: inline-block;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
-
 .content-wrapper.kanban .card.card-row:first-child {
   margin-left: 0;
 }
-
 .content-wrapper.kanban .card.card-row .card-body {
-  height: calc(100% - (12px + (1.8rem * 1.2) + .5rem));
+  height: calc(100% - (12px + (1.8rem * 1.2) + 0.5rem));
   overflow-y: auto;
 }
-
 .content-wrapper.kanban .card.card-row .card:last-child {
   margin-bottom: 0;
   border-bottom-width: 1px;
 }
-
 .content-wrapper.kanban .card.card-row .card .card-header {
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
 }
-
 .content-wrapper.kanban .card.card-row .card .card-body {
-  padding: .75rem;
+  padding: 0.75rem;
 }
-
 .content-wrapper.kanban .btn-tool.btn-link {
   text-decoration: underline;
   padding-left: 0;
   padding-right: 0;
 }
+
 /*# sourceMappingURL=adminlte.pages.css.map */
