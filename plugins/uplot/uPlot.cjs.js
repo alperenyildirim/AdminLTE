@@ -4,7 +4,7 @@
 *
 * uPlot.js (μPlot)
 * A small, fast chart for time series, lines, areas, ohlc & bars
-* https://github.com/leeoniya/uPlot (v1.6.21)
+* https://github.com/leeoniya/uPlot (v1.6.22)
 */
 
 'use strict';
@@ -534,6 +534,8 @@ function fastIsObj(v) {
 	return v != null && typeof v == 'object';
 }
 
+const TypedArray = Object.getPrototypeOf(Uint8Array);
+
 function copy(o, _isObj = isObj) {
 	let out;
 
@@ -543,11 +545,13 @@ function copy(o, _isObj = isObj) {
 		if (isArr(val) || _isObj(val)) {
 			out = Array(o.length);
 			for (let i = 0; i < o.length; i++)
-			  out[i] = copy(o[i], _isObj);
+				out[i] = copy(o[i], _isObj);
 		}
 		else
 			out = o.slice();
 	}
+	else if (o instanceof TypedArray) // also (ArrayBuffer.isView(o) && !(o instanceof DataView))
+		out = o.slice();
 	else if (_isObj(o)) {
 		out = {};
 		for (let k in o)
@@ -2239,6 +2243,10 @@ function bars(opts) {
 			for (let i = _dirX == 1 ? idx0 : idx1; i >= idx0 && i <= idx1; i += _dirX) {
 				let yVal = dataY[i];
 
+				// we can skip both, drawing and band clipping for alignment artifacts
+				if (yVal === undefined)
+					continue;
+
 			/*
 				// interpolate upwards band clips
 				if (yVal == null) {
@@ -3374,6 +3382,24 @@ function uPlot(opts, data, then) {
 		resetYSeries(true);
 
 		fire("setData");
+
+		// forces x axis tick values to re-generate when neither x scale nor y scale changes
+		// in ordinal mode, scale range is by index, so will not change if new data has same length, but tick values are from data
+		if (xScaleDistr == 2) {
+			shouldConvergeSize = true;
+
+			/* or somewhat cheaper, and uglier:
+			if (ready) {
+				// logic extracted from axesCalc()
+				let i = 0;
+				let axis = axes[i];
+				let _splits = axis._splits.map(i => data0[i]);
+				let [_incr, _space] = axis._found;
+				let incr = data0[_splits[1]] - data0[_splits[0]];
+				axis._values = axis.values(self, axis.filter(self, _splits, i, _space, incr), i, _space, incr);
+			}
+			*/
+		}
 
 		if (_resetScales !== false) {
 			let xsc = scaleX;

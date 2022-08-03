@@ -1,5 +1,5 @@
 /*!
-* sweetalert2 v11.4.20
+* sweetalert2 v11.4.24
 * Released under the MIT License.
 */
 (function (global, factory) {
@@ -32,12 +32,6 @@
    */
 
   const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
-  /**
-   * @param {NodeList | HTMLCollection | NamedNodeMap | DOMTokenList} nodeList
-   * @returns {array}
-   */
-
-  const toArray = nodeList => Array.prototype.slice.call(nodeList);
   /**
    * Standardize console warnings
    * @param {string | array} message
@@ -89,6 +83,7 @@
   const hasToPromiseFn = arg => arg && typeof arg.toPromise === 'function';
   const asPromise = arg => hasToPromiseFn(arg) ? arg.toPromise() : Promise.resolve(arg);
   const isPromise = arg => arg && Promise.resolve(arg) === arg;
+  const getRandomElement = arr => arr[Math.floor(Math.random() * arr.length)];
 
   const defaultParams = {
     title: '',
@@ -377,7 +372,7 @@
    */
 
   const getFocusableElements = () => {
-    const focusableElementsWithTabindex = toArray(getPopup().querySelectorAll('[tabindex]:not([tabindex="-1"]):not([tabindex="0"])')) // sort according to tabindex
+    const focusableElementsWithTabindex = Array.from(getPopup().querySelectorAll('[tabindex]:not([tabindex="-1"]):not([tabindex="0"])')) // sort according to tabindex
     .sort((a, b) => {
       const tabindexA = parseInt(a.getAttribute('tabindex'));
       const tabindexB = parseInt(b.getAttribute('tabindex'));
@@ -390,7 +385,7 @@
 
       return 0;
     });
-    const otherFocusableElements = toArray(getPopup().querySelectorAll(focusable)).filter(el => el.getAttribute('tabindex') !== '-1');
+    const otherFocusableElements = Array.from(getPopup().querySelectorAll(focusable)).filter(el => el.getAttribute('tabindex') !== '-1');
     return uniqueArray(focusableElementsWithTabindex.concat(otherFocusableElements)).filter(el => isVisible(el));
   };
   /**
@@ -432,10 +427,10 @@
     if (html) {
       const parser = new DOMParser();
       const parsed = parser.parseFromString(html, "text/html");
-      toArray(parsed.querySelector('head').childNodes).forEach(child => {
+      Array.from(parsed.querySelector('head').childNodes).forEach(child => {
         elem.appendChild(child);
       });
-      toArray(parsed.querySelector('body').childNodes).forEach(child => {
+      Array.from(parsed.querySelector('body').childNodes).forEach(child => {
         elem.appendChild(child);
       });
     }
@@ -467,7 +462,7 @@
    */
 
   const removeCustomClasses = (elem, params) => {
-    toArray(elem.classList).forEach(className => {
+    Array.from(elem.classList).forEach(className => {
       if (!Object.values(swalClasses).includes(className) && !Object.values(iconTypes).includes(className) && !Object.values(params.showClass).includes(className)) {
         elem.classList.remove(className);
       }
@@ -585,11 +580,13 @@
    */
 
   const getDirectChildByClass = (elem, className) => {
-    const childNodes = toArray(elem.childNodes);
+    const children = Array.from(elem.children);
 
-    for (let i = 0; i < childNodes.length; i++) {
-      if (hasClass(childNodes[i], className)) {
-        return childNodes[i];
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
+
+      if (child instanceof HTMLElement && hasClass(child, className)) {
+        return child;
       }
     }
   };
@@ -1818,7 +1815,7 @@
   // reader’s list of elements (headings, form controls, landmarks, etc.) in the document.
 
   const setAriaHidden = () => {
-    const bodyChildren = toArray(document.body.children);
+    const bodyChildren = Array.from(document.body.children);
     bodyChildren.forEach(el => {
       if (el === getContainer() || el.contains(getContainer())) {
         return;
@@ -1832,7 +1829,7 @@
     });
   };
   const unsetAriaHidden = () => {
-    const bodyChildren = toArray(document.body.children);
+    const bodyChildren = Array.from(document.body.children);
     bodyChildren.forEach(el => {
       if (el.hasAttribute('data-previous-aria-hidden')) {
         el.setAttribute('aria-hidden', el.getAttribute('data-previous-aria-hidden'));
@@ -1864,7 +1861,10 @@
 
   const getSwalParams = templateContent => {
     const result = {};
-    toArray(templateContent.querySelectorAll('swal-param')).forEach(param => {
+    /** @type {HTMLElement[]} */
+
+    const swalParams = Array.from(templateContent.querySelectorAll('swal-param'));
+    swalParams.forEach(param => {
       showWarningsForAttributes(param, ['name', 'value']);
       const paramName = param.getAttribute('name');
       const value = param.getAttribute('value');
@@ -1886,7 +1886,10 @@
 
   const getSwalButtons = templateContent => {
     const result = {};
-    toArray(templateContent.querySelectorAll('swal-button')).forEach(button => {
+    /** @type {HTMLElement[]} */
+
+    const swalButtons = Array.from(templateContent.querySelectorAll('swal-button'));
+    swalButtons.forEach(button => {
       showWarningsForAttributes(button, ['type', 'color', 'aria-label']);
       const type = button.getAttribute('type');
       result["".concat(type, "ButtonText")] = button.innerHTML;
@@ -1989,12 +1992,14 @@
         result.inputValue = input.getAttribute('value');
       }
     }
+    /** @type {HTMLElement[]} */
 
-    const inputOptions = templateContent.querySelectorAll('swal-input-option');
+
+    const inputOptions = Array.from(templateContent.querySelectorAll('swal-input-option'));
 
     if (inputOptions.length) {
       result.inputOptions = {};
-      toArray(inputOptions).forEach(option => {
+      inputOptions.forEach(option => {
         showWarningsForAttributes(option, ['value']);
         const optionValue = option.getAttribute('value');
         const optionName = option.innerHTML;
@@ -2034,7 +2039,7 @@
 
   const showWarningsForElements = templateContent => {
     const allowedElements = swalStringParams.concat(['swal-param', 'swal-button', 'swal-image', 'swal-icon', 'swal-input', 'swal-input-option']);
-    toArray(templateContent.children).forEach(el => {
+    Array.from(templateContent.children).forEach(el => {
       const tagName = el.tagName.toLowerCase();
 
       if (allowedElements.indexOf(tagName) === -1) {
@@ -2049,7 +2054,7 @@
 
 
   const showWarningsForAttributes = (el, allowedAttributes) => {
-    toArray(el.attributes).forEach(attribute => {
+    Array.from(el.attributes).forEach(attribute => {
       if (allowedAttributes.indexOf(attribute.name) === -1) {
         warn(["Unrecognized attribute \"".concat(attribute.name, "\" on <").concat(el.tagName.toLowerCase(), ">."), "".concat(allowedAttributes.length ? "Allowed attributes are: ".concat(allowedAttributes.join(', ')) : 'To set the value, use HTML within the element.')]);
       }
@@ -3268,6 +3273,10 @@
     _destroy: _destroy
   });
 
+  /**
+   * @param {SweetAlert2} instance
+   */
+
   const handleConfirmButtonClick = instance => {
     const innerParams = privateProps.innerParams.get(instance);
     instance.disableButtons();
@@ -3278,6 +3287,10 @@
       confirm(instance, true);
     }
   };
+  /**
+   * @param {SweetAlert2} instance
+   */
+
   const handleDenyButtonClick = instance => {
     const innerParams = privateProps.innerParams.get(instance);
     instance.disableButtons();
@@ -3288,18 +3301,26 @@
       deny(instance, false);
     }
   };
+  /**
+   * @param {SweetAlert2} instance
+   * @param {Function} dismissWith
+   */
+
   const handleCancelButtonClick = (instance, dismissWith) => {
     instance.disableButtons();
     dismissWith(DismissReason.cancel);
   };
+  /**
+   * @param {SweetAlert2} instance
+   * @param {'confirm' | 'deny'} type
+   */
 
-  const handleConfirmOrDenyWithInput = (instance, type
-  /* 'confirm' | 'deny' */
-  ) => {
+  const handleConfirmOrDenyWithInput = (instance, type) => {
     const innerParams = privateProps.innerParams.get(instance);
 
     if (!innerParams.input) {
-      return error("The \"input\" parameter is needed to be set when using returnInputValueOn".concat(capitalizeFirstLetter(type)));
+      error("The \"input\" parameter is needed to be set when using returnInputValueOn".concat(capitalizeFirstLetter(type)));
+      return;
     }
 
     const inputValue = getInputValue(instance, innerParams);
@@ -3315,10 +3336,14 @@
       confirm(instance, inputValue);
     }
   };
+  /**
+   * @param {SweetAlert2} instance
+   * @param {string} inputValue
+   * @param {'confirm' | 'deny'} type
+   */
 
-  const handleInputValidator = (instance, inputValue, type
-  /* 'confirm' | 'deny' */
-  ) => {
+
+  const handleInputValidator = (instance, inputValue, type) => {
     const innerParams = privateProps.innerParams.get(instance);
     instance.disableInput();
     const validationPromise = Promise.resolve().then(() => asPromise(innerParams.inputValidator(inputValue, innerParams.validationMessage)));
@@ -3335,6 +3360,11 @@
       }
     });
   };
+  /**
+   * @param {SweetAlert2} instance
+   * @param {any} value
+   */
+
 
   const deny = (instance, value) => {
     const innerParams = privateProps.innerParams.get(instance || undefined);
@@ -3352,30 +3382,48 @@
           instance.hideLoading();
           handleAwaitingPromise(instance);
         } else {
-          instance.closePopup({
+          instance.close({
             isDenied: true,
             value: typeof preDenyValue === 'undefined' ? value : preDenyValue
           });
         }
       }).catch(error$$1 => rejectWith(instance || undefined, error$$1));
     } else {
-      instance.closePopup({
+      instance.close({
         isDenied: true,
         value
       });
     }
   };
+  /**
+   * @param {SweetAlert2} instance
+   * @param {any} value
+   */
+
 
   const succeedWith = (instance, value) => {
-    instance.closePopup({
+    instance.close({
       isConfirmed: true,
       value
     });
   };
+  /**
+   *
+   * @param {SweetAlert2} instance
+   * @param {string} error
+   */
+
 
   const rejectWith = (instance, error$$1) => {
+    // @ts-ignore
     instance.rejectPromise(error$$1);
   };
+  /**
+   *
+   * @param {SweetAlert2} instance
+   * @param {any} value
+   */
+
 
   const confirm = (instance, value) => {
     const innerParams = privateProps.innerParams.get(instance || undefined);
@@ -3898,7 +3946,14 @@
     if (Math.random() < 0.1) {
       const noWar = document.createElement('div');
       noWar.className = 'leave-russia-now-and-apply-your-skills-to-the-world';
-      setInnerHtml(noWar, "\n      <div>\n        \u0415\u0441\u043B\u0438 \u043C\u044B \u043D\u0435 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043C \u0432\u043E\u0439\u043D\u0443, \u043E\u043D\u0430 \u043F\u0440\u0438\u0434\u0435\u0442 \u0432 \u0434\u043E\u043C <strong>\u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0438\u0437 \u043D\u0430\u0441</strong> \u0438 \u0435\u0451 \u043F\u043E\u0441\u043B\u0435\u0434\u0441\u0442\u0432\u0438\u044F \u0431\u0443\u0434\u0443\u0442 <strong>\u0443\u0436\u0430\u0441\u0430\u044E\u0449\u0438\u043C\u0438</strong>.\n      </div>\n      <div>\n        \u041F\u0443\u0442\u0438\u043D\u0441\u043A\u0438\u0439 \u0440\u0435\u0436\u0438\u043C \u0437\u0430 20 \u0441 \u043B\u0438\u0448\u043D\u0438\u043C \u043B\u0435\u0442 \u0441\u0432\u043E\u0435\u0433\u043E \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043E\u0432\u0430\u043D\u0438\u044F \u0432\u0434\u043E\u043B\u0431\u0438\u043B \u043D\u0430\u043C, \u0447\u0442\u043E \u043C\u044B \u0431\u0435\u0441\u0441\u0438\u043B\u044C\u043D\u044B \u0438 \u043E\u0434\u0438\u043D \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u043D\u0438\u0447\u0435\u0433\u043E \u0441\u0434\u0435\u043B\u0430\u0442\u044C. <strong>\u042D\u0442\u043E \u043D\u0435 \u0442\u0430\u043A!</strong>\n      </div>\n      <div>\n        \u0412 \u043D\u0438\u0436\u0435\u043F\u0440\u0438\u0432\u0435\u0434\u0451\u043D\u043D\u043E\u043C \u0432\u0438\u0434\u0435\u043E \u043E\u0431\u044A\u044F\u0441\u043D\u044F\u0435\u0442\u0441\u044F \u043A\u0430\u043A \u043A\u0430\u0436\u0434\u044B\u0439 \u0438\u0437 \u043D\u0430\u0441 \u043C\u043E\u0436\u0435\u0442 \u043F\u043E\u043C\u043E\u0447\u044C \u0432 \u0442\u043E\u043C, <strong>\u0447\u0442\u043E\u0431\u044B \u044D\u0442\u0430 \u0431\u0435\u0441\u0441\u043C\u044B\u0441\u043B\u0435\u043D\u043D\u0430\u044F \u0438 \u0431\u0435\u0441\u0447\u0435\u043B\u043E\u0432\u0435\u0447\u043D\u0430\u044F \u0432\u043E\u0439\u043D\u0430 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C</strong>:\n      </div>\n      <iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/4CfDhaRkw7I\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n      <div>\n        \u041D\u0435\u0442 \u0432\u043E\u0439\u043D\u0435!\n      </div>\n      ");
+      const video = getRandomElement([{
+        text: "\u0412 \u043D\u0438\u0436\u0435\u043F\u0440\u0438\u0432\u0435\u0434\u0451\u043D\u043D\u043E\u043C \u0432\u0438\u0434\u0435\u043E \u043E\u0431\u044A\u044F\u0441\u043D\u044F\u0435\u0442\u0441\u044F \u043A\u0430\u043A \u043A\u0430\u0436\u0434\u044B\u0439 \u0438\u0437 \u043D\u0430\u0441 \u043C\u043E\u0436\u0435\u0442 \u043F\u043E\u043C\u043E\u0447\u044C \u0432 \u0442\u043E\u043C,\n        <strong>\u0447\u0442\u043E\u0431\u044B \u044D\u0442\u0430 \u0431\u0435\u0441\u0441\u043C\u044B\u0441\u043B\u0435\u043D\u043D\u0430\u044F \u0438 \u0431\u0435\u0441\u0447\u0435\u043B\u043E\u0432\u0435\u0447\u043D\u0430\u044F \u0432\u043E\u0439\u043D\u0430 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0430\u0441\u044C</strong>:",
+        id: '4CfDhaRkw7I'
+      }, {
+        text: 'Эмпатия - главное <strong>человеческое</strong> чувство. Способность сопереживать. <strong>Способность поставить себя на место другого.</strong>',
+        id: 's-GLAIY4DXA'
+      }]);
+      setInnerHtml(noWar, "\n      <div>\n        \u0415\u0441\u043B\u0438 \u043C\u044B \u043D\u0435 \u043E\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043C \u0432\u043E\u0439\u043D\u0443, \u043E\u043D\u0430 \u043F\u0440\u0438\u0434\u0435\u0442 \u0432 \u0434\u043E\u043C <strong>\u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0438\u0437 \u043D\u0430\u0441</strong> \u0438 \u0435\u0451 \u043F\u043E\u0441\u043B\u0435\u0434\u0441\u0442\u0432\u0438\u044F \u0431\u0443\u0434\u0443\u0442 <strong>\u0443\u0436\u0430\u0441\u0430\u044E\u0449\u0438\u043C\u0438</strong>.\n      </div>\n      <div>\n        \u041F\u0443\u0442\u0438\u043D\u0441\u043A\u0438\u0439 \u0440\u0435\u0436\u0438\u043C \u0437\u0430 20 \u0441 \u043B\u0438\u0448\u043D\u0438\u043C \u043B\u0435\u0442 \u0441\u0432\u043E\u0435\u0433\u043E \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043E\u0432\u0430\u043D\u0438\u044F \u0432\u0434\u043E\u043B\u0431\u0438\u043B \u043D\u0430\u043C, \u0447\u0442\u043E \u043C\u044B \u0431\u0435\u0441\u0441\u0438\u043B\u044C\u043D\u044B \u0438 \u043E\u0434\u0438\u043D \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u043D\u0438\u0447\u0435\u0433\u043E \u0441\u0434\u0435\u043B\u0430\u0442\u044C. <strong>\u042D\u0442\u043E \u043D\u0435 \u0442\u0430\u043A!</strong>\n      </div>\n      <div>\n        ".concat(video.text, "\n      </div>\n      <iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/").concat(video.id, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n      <div>\n        \u041D\u0435\u0442 \u0432\u043E\u0439\u043D\u0435!\n      </div>\n      "));
       const closeButton = document.createElement('button');
       closeButton.innerHTML = '&times;';
 
@@ -3926,7 +3981,7 @@
     };
   });
   SweetAlert.DismissReason = DismissReason;
-  SweetAlert.version = '11.4.20';
+  SweetAlert.version = '11.4.24';
 
   const Swal = SweetAlert; // @ts-ignore
 
